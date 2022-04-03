@@ -5,20 +5,21 @@
  * Author : Andrew Ingram
  */ 
 
+#include "include/common.h" // Must be included first
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdbool.h>
 
-#define BITVALUE(x) (1 << x)
 
-#define DELAY_S 200
-#define DELAY_O 500
+
+#define DELAY_S 300
+#define DELAY_O 800
 
 void morse(char letter);
 
 int main() {
 
-	DDRB |= BITVALUE(PORTB1);
+	DDRB |= BITVALUE(RUN_LED_PIN);
 
 	while (true) {
 		morse('s');
@@ -34,7 +35,9 @@ void morse(char letter) {
 	{
 		for (int i = 0; i < 3; i++) 
 		{
-			PORTB ^= BITVALUE(PORTB1);
+			PORTB |= BITVALUE(RUN_LED_PIN);
+			_delay_ms(DELAY_S);
+			PORTB &= ~BITVALUE(RUN_LED_PIN);
 			_delay_ms(DELAY_S);
 		}
 	} 
@@ -42,8 +45,10 @@ void morse(char letter) {
 	{
 		for (int i = 0; i < 3; i++) 
 		{
-			PORTB ^= BITVALUE(PORTB1);
+			PORTB ^= BITVALUE(RUN_LED_PIN);
 			_delay_ms(DELAY_O);
+			PORTB &= ~BITVALUE(RUN_LED_PIN);
+			_delay_ms(DELAY_S);
 		}
 	}
 }

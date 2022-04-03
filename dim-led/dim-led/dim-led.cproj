@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>blink-sos</AssemblyName>
-    <Name>blink-sos</Name>
-    <RootNamespace>blink-sos</RootNamespace>
+    <AssemblyName>dim-led</AssemblyName>
+    <Name>dim-led</Name>
+    <RootNamespace>dim-led</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -98,6 +98,7 @@
         <avrgcc.compiler.directories.IncludePaths>
           <ListValues>
             <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\2.0.401\include\</Value>
+            <Value>../common/include</Value>
           </ListValues>
         </avrgcc.compiler.directories.IncludePaths>
         <avrgcc.compiler.optimization.level>Optimize debugging experience (-Og)</avrgcc.compiler.optimization.level>
@@ -120,7 +121,34 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="include\common.h">
+    <Compile Include="common\include\common.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\include\queue.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\include\usart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\include\log.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\src\queue.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\src\usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\src\log.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\src\common.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\src\timers.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="common\src\io.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -128,7 +156,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="include" />
+    <Folder Include="common\include\" />
+    <Folder Include="common" />
+    <Folder Include="common\src" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
